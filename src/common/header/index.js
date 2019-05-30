@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { CSSTransition } from 'react-transition-group';
+import { actionCreators } from './store'
 import {
   HeaderWrapper,
   Logo,
@@ -59,18 +60,11 @@ const mapDispatchToProps = (dispatch) => {
   return {
     // 聚焦状态时
     handleInputFocus() {
-      const action = {
-        type: 'header/search_focus',
-        value: 1123,
-      };
-      dispatch(action);
+      dispatch(actionCreators.searchFocus());
     },
     // 失去焦点
     handleInputBlur() {
-      const action = {
-        type: 'header/search_blur',
-      };
-      dispatch(action);
+      dispatch(actionCreators.searchBlur());
     }
   }
 };
