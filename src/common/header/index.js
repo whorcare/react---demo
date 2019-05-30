@@ -47,8 +47,9 @@ const Header = (props) => {
 
 // 链接规则 将state 的 数据 映射 为 props
 const mapStateToProps = (state) => {
+  console.log(state.header.focused, 'state');
   return {
-    focused: state.focused
+    focused: state.header.focused
   }
 };
 
@@ -59,16 +60,15 @@ const mapDispatchToProps = (dispatch) => {
     // 聚焦状态时
     handleInputFocus() {
       const action = {
-        type: 'search_focus',
-        value: true
+        type: 'header/search_focus',
+        value: 1123,
       };
       dispatch(action);
     },
     // 失去焦点
     handleInputBlur() {
       const action = {
-        type: 'search_blur',
-        value: true
+        type: 'header/search_blur',
       };
       dispatch(action);
     }

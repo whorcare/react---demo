@@ -1,18 +1,9 @@
-const defaultState = {
-  focused: false, // input焦点
-};
+// redux 合并 将 多个reducer 合并 成为一个reducer
+import { combineReducers } from 'redux';
+import { reducer as headerReducer } from '../common/header/store'; // as => ES6 给 对象起个别名
 
-export default (state = defaultState, action) => {
-  if (action.type === 'search_focus') {
-    const newState = JSON.parse(JSON.stringify(state));
-    newState.focused = true;
-    return newState;
-  }
-  if (action.type === 'search_blur') {
-    const newState = JSON.parse(JSON.stringify(state));
-    newState.focused = false;
-    return newState;
-  }
+const reducer = combineReducers ({
+  header: headerReducer
+});
 
-  return state
-}
+export default reducer;
