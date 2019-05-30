@@ -48,9 +48,8 @@ const Header = (props) => {
 
 // 链接规则 将state 的 数据 映射 为 props
 const mapStateToProps = (state) => {
-  console.log(state.header.focused, 'state');
   return {
-    focused: state.header.focused
+    focused: state.header.get('focused'), // 使用 get
   }
 };
 
