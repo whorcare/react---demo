@@ -10,9 +10,33 @@ import {
   NavSearch,
   Addition,
   Button,
+  SearchInfo,
+  SearchInfoTitle,
+  SearchInfoSwitch,
+  SearchInfoItem,
   SearchWrapper,
   Sous
 } from './style.js'
+
+const getListArea = (show) => {
+  if (show) {
+    return (
+      <SearchInfo>
+        <SearchInfoTitle>
+          热门搜索
+          <SearchInfoSwitch>换一批</SearchInfoSwitch>
+        </SearchInfoTitle>
+        <div>
+          <SearchInfoItem>教育</SearchInfoItem>
+          <SearchInfoItem>教育</SearchInfoItem>
+          <SearchInfoItem>教育</SearchInfoItem>
+        </div>
+      </SearchInfo>
+    )
+  } else {
+    return null;
+  }
+};
 
 const Header = (props) => {
   return (
@@ -36,6 +60,7 @@ const Header = (props) => {
             ></NavSearch>
           </CSSTransition>
           <Sous></Sous>
+          {getListArea(props.focused)}
         </SearchWrapper>
       </Nav>
       <Addition>
@@ -49,7 +74,8 @@ const Header = (props) => {
 // 链接规则 将state 的 数据 映射 为 props
 const mapStateToProps = (state) => {
   return {
-    focused: state.header.get('focused'), // 使用 get
+    // focused: state.get('header').get('focused'), // 使用 get (state已经变为immutable对象)
+    focused: state.getIn(['header', 'focused']), // immutable语法糖
   }
 };
 
