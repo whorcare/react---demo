@@ -22,23 +22,30 @@ import {
 class Header extends Component {
 
   getListArea() {
-    const { focused, list } = this.props;
+    const { focused, mouseIn, list, page, totalPage, handleMouseEnter, handleMouseLeave, handleChangPage } = this.props;
+    const newList = list.toJS(); // immutable 对象 转为 正常使用的js
+    const pageList = [];
 
-    if (focused) {
+    if (newList.length > 0) {
+      for (let i = (page - 1) * 10; i < page * 10; i++) {
+        pageList.push(
+          <SearchInfoItem key={newList[i]}>{newList[i]}</SearchInfoItem>
+        )
+      }
+    }
+
+    if (focused || mouseIn) {
       return (
-        <SearchInfo>
+        <SearchInfo 
+          onMouseEnter={handleMouseEnter}
+          onMouseLeave={handleMouseLeave}
+        >
           <SearchInfoTitle>
             热门搜索
-            <SearchInfoSwitch>换一批</SearchInfoSwitch>
+            <SearchInfoSwitch onClick={() => handleChangPage(page, totalPage)}>换一批</SearchInfoSwitch>
           </SearchInfoTitle>
           <SearchInfoList>
-            {
-              list.map((item) => {
-                return (
-                  <SearchInfoItem key={item}>{item}</SearchInfoItem>
-                )
-              })
-            }
+            {pageList}
           </SearchInfoList>
         </SearchInfo>
       )
@@ -89,6 +96,9 @@ const mapStateToProps = (state) => {
     // focused: state.get('header').get('focused'), // 使用 get (state已经变为immutable对象)
     focused: state.getIn(['header', 'focused']), // immutable语法糖
     list: state.getIn(['header', 'list']),
+    page: state.getIn(['header', 'page']),
+    totalPage: state.getIn(['header', 'totalPage']),
+    mouseIn: state.getIn(['header', 'mouseIn']),
   }
 };
 
@@ -104,6 +114,21 @@ const mapDispatchToProps = (dispatch) => {
     // 失去焦点
     handleInputBlur() {
       dispatch(actionCreators.searchBlur());
+    },
+    // 鼠标移入
+    handleMouseEnter() {
+      dispatch(actionCreators.mouseEnter());
+    },
+    handleMouseLeave() {
+      dispatch(actionCreators.mouseLeave());
+    },
+    // 切换页码 换一批
+    handleChangPage(page, totalPage) {
+      if (page < totalPage) {
+        dispatch(actionCreators.changePage(page + 1));
+      } else {
+        dispatch(actionCreators.changePage(1));
+      }
     }
   }
 };
