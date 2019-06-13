@@ -37,14 +37,8 @@ const mapStateToProps = (state) => {
   }
 };
 
-// 改变 store 数据
-// store .dispatch. props
 const mapDispatchToProps = (dispatch) => {
   return {
-    // 失去焦点
-    // handleInputBlur() {
-    //   dispatch(actionCreators.searchBlur());
-    // },
   }
 };
 
