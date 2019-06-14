@@ -1,9 +1,12 @@
 /* eslint-disable jsx-a11y/alt-text */
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import Topic from './components/Topic';
 import List from './components/List';
 import Recommend from './components/Recommend';
 import Write from './components/write';
+import { actionCreators } from './store';
+
 import { 
   HomeWrapper,
   HomeLeft,
@@ -29,6 +32,26 @@ class Home extends Component {
       </HomeWrapper>
     )
   }
+
+  // 当组价挂载完毕
+  componentDidMount() {
+    this.props.changeHomeData();
+  }
 }
 
-export default Home;
+// 链接规则 将state 的 数据 映射 为 props
+const mapStateToProps = (state) => {
+  return {
+    list: state.getIn(['home', 'topicList']),
+  }
+};
+
+const mapDispatchToProps = (dispatch) => ({
+  changeHomeData() {
+    const action = actionCreators.getHomeInfo();
+    dispatch(action);
+  }  
+});
+
+// export default Home;
+export default connect(mapStateToProps, mapDispatchToProps)(Home);

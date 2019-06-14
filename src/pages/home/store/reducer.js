@@ -1,67 +1,24 @@
 // 为了防止state被改变 immutable 对象 设置为不能 被改变
 import { fromJS } from  'immutable';
+import * as constants from './constants';
 
 const defaultState = fromJS({
-  topicList: [
-    {
-    id: 1,
-    title: '社会热点',
-    imgUrl: '//upload-images.jianshu.io/upload_images/2903481-ec0391f930d3944d.PNG?imageMogr2/auto-orient/strip|imageView2/1/w/360/h/240'
-    },
-    {
-      id: 2,
-      title: 'DEEPIN',
-      imgUrl: 'https://upload-images.jianshu.io/upload_images/17744323-b8e9f8c53849e311.png?imageMogr2/auto-orient/strip|imageView2/1/w/360/h/240'
-    },
-    {
-      id: 3,
-      title: '广告',
-      imgUrl: 'https://oimageb2.ydstatic.com/image?id=6730783280712305022&product=adpublish&w=300&h=200&sc=0&rm=2&gsb=0&gsbd=60'
-    },
-    {
-      id: 4,
-      title: '关于简书',
-      imgUrl: '//upload-images.jianshu.io/upload_images/15476082-6903fd5d5d72a84f.jpg?imageMogr2/auto-orient/strip|imageView2/1/w/360/h/240'
-    },
-  ],
-  articleList: [{
-    "id": 1,
-    "title": "胡歌12年后首谈车祸",
-    "desc": "文/麦大人 01 胡歌又刷屏了。 近日他上了《朗读者》，而这一期的主题是“生命”，他用磁性的嗓音，朗读了一段《哈姆雷特》中的经典独白，相当震撼：...",
-    "imgUrl": "https://upload-images.jianshu.io/upload_images/17744323-b8e9f8c53849e311.png?imageMogr2/auto-orient/strip|imageView2/1/w/360/h/240"
-  }, {
-    "id": 2,
-    "title": "胡歌12年后首谈车祸：既然活下来了，就不能白白活着",
-    "desc": "文/麦大人 01 胡歌又刷屏了。 近日他上了《朗读者》，而这一期的主题是“生命”，他用磁性的嗓音，朗读了一段《哈姆雷特》中的经典独白，相当震撼：...",
-    "imgUrl": "//upload-images.jianshu.io/upload_images/2903481-ec0391f930d3944d.PNG?imageMogr2/auto-orient/strip|imageView2/1/w/360/h/240"
-  }, {
-    "id": 3,
-    "title": "胡歌12年后首谈车祸：既然活下来了，就不能白白活着",
-    "desc": "文/麦大人 01 胡歌又刷屏了。 近日他上了《朗读者》，而这一期的主题是“生命”，他用磁性的嗓音，朗读了一段《哈姆雷特》中的经典独白，相当震撼：...",
-    "imgUrl": "//upload-images.jianshu.io/upload_images/2903481-ec0391f930d3944d.PNG?imageMogr2/auto-orient/strip|imageView2/1/w/360/h/240"
-  }, {
-    "id": 4,
-    "title": "胡歌12年后首谈车祸：既然活下来了，就不能白白活着",
-    "desc": "文/麦大人 01 胡歌又刷屏了。 近日他上了《朗读者》，而这一期的主题是“生命”，他用磁性的嗓音，朗读了一段《哈姆雷特》中的经典独白，相当震撼：...",
-    "imgUrl": "//upload-images.jianshu.io/upload_images/15476082-6903fd5d5d72a84f.jpg?imageMogr2/auto-orient/strip|imageView2/1/w/360/h/240"
-  }],
-  recommendList: [{
-    "id": 1,
-    "imgUrl": "//cdn2.jianshu.io/assets/web/banner-s-club-aa8bdf19f8cf729a759da42e4a96f366.png"
-  }, {
-    "id": 2,
-    "imgUrl": "http://cdn2.jianshu.io/assets/web/banner-s-5-4ba25cf5041931a0ed2062828b4064cb.png"
-  },{
-    "id": 3,
-    "imgUrl": "//cdn2.jianshu.io/assets/web/banner-s-6-c4d6335bfd688f2ca1115b42b04c28a7.png"
-  }]
+  topicList: [],
+  articleList: [],
+  recommendList: []
 });
 
 
 export default (state = defaultState, action) => {
   switch (action.type) {
-    // case constants.SEARCH_BLUR :
-    //   return state.set('focused', false);
+    case constants.CHANGE_HOME_DATA :
+      console.log(action)
+      // return state.set('topicList', fromJS(action.topicList));
+      return state.merge({
+        topicList: fromJS(action.topicList),
+        articleList: fromJS(action.articleList),
+        recommendList: fromJS(action.recommendList),
+      })
     default :
       return state
   }
