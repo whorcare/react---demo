@@ -11,9 +11,16 @@ import {
   HomeWrapper,
   HomeLeft,
   HomeRight,
+  BackTop,
 } from './style';
 
 class Home extends Component {
+
+  // 回到顶部
+  handleScrollTop() {
+    window.scrollTo(0, 0);
+  }
+
   render() {
     return (
       <HomeWrapper>
@@ -29,6 +36,7 @@ class Home extends Component {
         <Recommend/>
           <Write/>
         </HomeRight>
+        { this.props.showScroll ? <BackTop onClick={this.handleScrollTop}>回到顶部</BackTop> : null }
       </HomeWrapper>
     )
   }
@@ -36,13 +44,23 @@ class Home extends Component {
   // 当组价挂载完毕
   componentDidMount() {
     this.props.changeHomeData();
+    this.bindEvents();
+  }
+
+  // 页面移除钩子
+  componentWillMount() {
+    window.removeEventListener('scroll', this.props.changeScrollTopShow)
+  }
+
+  bindEvents() {
+    window.addEventListener('scroll', this.props.changeScrollTopShow)
   }
 }
 
 // 链接规则 将state 的 数据 映射 为 props
 const mapStateToProps = (state) => {
   return {
-    list: state.getIn(['home', 'topicList']),
+    showScroll: state.getIn(['home', 'showScroll']),
   }
 };
 
@@ -50,7 +68,14 @@ const mapDispatchToProps = (dispatch) => ({
   changeHomeData() {
     const action = actionCreators.getHomeInfo();
     dispatch(action);
-  }  
+  },
+  changeScrollTopShow() {
+    if (document.documentElement.scrollTop > 100) {
+      dispatch(actionCreators.toogleTopShow(true));
+    } else {
+      dispatch(actionCreators.toogleTopShow(false));
+    }
+  }
 });
 
 // export default Home;

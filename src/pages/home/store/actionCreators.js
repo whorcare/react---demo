@@ -34,3 +34,8 @@ export const getMoreList = (page) => {
     })
   }
 }
+
+export const toogleTopShow = (show) => ({
+  type: constants.TOGGLE_SCROLL_TOP,
+  show,
+})
