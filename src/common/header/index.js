@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { CSSTransition } from 'react-transition-group';
 import { actionCreators } from './store'
+import { Link } from 'react-router-dom';
 import {
   HeaderWrapper,
   Logo,
@@ -59,7 +60,9 @@ class Header extends Component {
 
     return (
       <HeaderWrapper>
-        <Logo />
+        <Link to="/">
+          <Logo />
+        </Link>
         <Nav>
           <NavItem className="left">首页</NavItem>
           <NavItem className="left">下载APP</NavItem>

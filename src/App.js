@@ -12,16 +12,14 @@ function App() {
   return (
     <Fragment>
       <Provider store={store}>
-        <div>
-          <Header></Header>
-          {/* 此处使用路由 */}
-          <BrowserRouter>
-            <div>
-              <Route path='/' exact component={Home}></Route>
-              <Route path='/detail' exact component={Detail}></Route>
-            </div>
-          </BrowserRouter>
-        </div>
+        {/* 此处使用路由 */}
+        <BrowserRouter>
+          <div>
+            <Header></Header>
+            <Route path='/' exact component={Home}></Route>
+            <Route path='/detail' exact component={Detail}></Route>
+          </div>
+        </BrowserRouter>
       </Provider>
       <GrobalStyle/>
     </Fragment>

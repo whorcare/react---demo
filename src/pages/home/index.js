@@ -1,5 +1,5 @@
 /* eslint-disable jsx-a11y/alt-text */
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
 import Topic from './components/Topic';
 import List from './components/List';
@@ -14,7 +14,12 @@ import {
   BackTop,
 } from './style';
 
-class Home extends Component {
+// PureComponent 纯组件 底层 实现了shouldComponentUpdate 但 同时 必需使用 immutable 对象 管理数据
+class Home extends PureComponent {
+
+  // 性能优化 只有当于该组件 数据相关 改变时 才会执行 重新渲染 render 函数
+  // shouldComponentUpdate() {
+  // }
 
   // 回到顶部
   handleScrollTop() {

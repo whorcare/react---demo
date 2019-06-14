@@ -1,13 +1,14 @@
 /* eslint-disable jsx-a11y/alt-text */
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
 import { actionCreators } from '../store';
+import { Link } from 'react-router-dom';
 
 import { 
   ListItem, ListInfo, LoadMore
 } from '../style'
 
-class List extends Component {
+class List extends PureComponent {
   render() {
     const { list, getMoreList, page } = this.props;
     return (
@@ -15,18 +16,21 @@ class List extends Component {
         {
           list.map((item, index) => {
             return (
-              <ListItem key={index}>
-                <img 
-                  className='pic' 
-                  src={item.get('imgUrl')}
-                />
-                <ListInfo>
-                  <h3 className='title'>{item.get('title')}</h3>
-                  {/* <h3 className='title'>title</h3> */}
-                  <p className='desc'>{item.get('desc')}</p>
-                  {/* <p className='desc'>desc</p> */}
-                </ListInfo>
-              </ListItem>
+              // 使用link 代替a 标签 单页面跳转实现
+              <Link to='/detail' key={index}>
+                <ListItem>
+                  <img 
+                    className='pic' 
+                    src={item.get('imgUrl')}
+                  />
+                  <ListInfo>
+                    <h3 className='title'>{item.get('title')}</h3>
+                    {/* <h3 className='title'>title</h3> */}
+                    <p className='desc'>{item.get('desc')}</p>
+                    {/* <p className='desc'>desc</p> */}
+                  </ListInfo>
+                </ListItem>
+              </Link>
             )
           })
         }
