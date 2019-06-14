@@ -1,19 +1,21 @@
 /* eslint-disable jsx-a11y/alt-text */
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { actionCreators } from '../store';
+
 import { 
-  ListItem, ListInfo
+  ListItem, ListInfo, LoadMore
 } from '../style'
 
 class List extends Component {
   render() {
-    const { list } = this.props;
+    const { list, getMoreList, page } = this.props;
     return (
       <div>
         {
-          list.map((item) => {
+          list.map((item, index) => {
             return (
-              <ListItem key={item.get('id')}>
+              <ListItem key={index}>
                 <img 
                   className='pic' 
                   src={item.get('imgUrl')}
@@ -28,7 +30,7 @@ class List extends Component {
             )
           })
         }
-
+        <LoadMore onClick={() => getMoreList(page)}>更多文字</LoadMore>
       </div>
     )
   }
@@ -38,14 +40,16 @@ class List extends Component {
 const mapStateToProps = (state) => {
   return {
     list: state.getIn(['home', 'articleList']),
+    page: state.getIn(['home', 'articlePage']),
   }
 };
 
-const mapDispatchToProps = (dispatch) => {
-  return {
+const mapDispatchToProps = (dispatch) => ({
+  getMoreList(page) {
+    dispatch(actionCreators.getMoreList(page))
   }
-};
+});
 
-// export default List;
+// export default List;dad
 // export default Topic;
 export default connect(mapStateToProps, mapDispatchToProps)(List);
